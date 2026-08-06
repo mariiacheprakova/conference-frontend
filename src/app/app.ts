@@ -1,35 +1,25 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { Component, inject } from '@angular/core';
 import { CreateSpeaker } from './models/create-speaker.model';
 import { Speaker } from './models/speaker.model';
-import { speakers } from './mock-data/speakers';
-import { environment } from '../environments/environment';
-
+import { SpeakerDataService } from './services/speaker-data';
+import { SpeakerForm } from './components/speaker-form/speaker-form';
+import { SpeakerList } from './components/speaker-list/speaker-list';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [SpeakerForm, SpeakerList],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-    constructor() {
-      console.log(environment.apiUrl);
-    }
+  private readonly speakerDataService = inject(SpeakerDataService);
 
-  readonly speakers: Speaker[] = speakers;
-
-  speakerForm: CreateSpeaker = {
-    name: '',
-    bio: '',
-    webSite: '',
-  };
+  readonly speakers: readonly Speaker[] =
+    this.speakerDataService.getSpeakers();
 
   submittedSpeaker: CreateSpeaker | null = null;
 
-  submitSpeaker(): void {
-    this.submittedSpeaker = {
-      ...this.speakerForm,
-    };
+  handleSpeakerSubmitted(speaker: CreateSpeaker): void {
+    this.submittedSpeaker = speaker;
   }
 }

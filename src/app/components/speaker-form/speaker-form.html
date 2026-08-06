@@ -1,0 +1,29 @@
+<section>
+  <h2>Create speaker</h2>
+
+  <form #form="ngForm" (ngSubmit)="submitSpeaker()">
+    <div>
+      <label for="name">Name</label>
+      <input id="name" name="name" type="text" required maxlength="200"
+             [(ngModel)]="speakerForm.name" #name="ngModel" />
+
+      @if (name.invalid && name.touched) {
+      <p>Name is required.</p>
+      }
+    </div>
+
+    <div>
+      <label for="bio">Biography</label>
+      <textarea id="bio" name="bio" maxlength="4000"
+                [(ngModel)]="speakerForm.bio"></textarea>
+    </div>
+
+    <div>
+      <label for="webSite">Website</label>
+      <input id="webSite" name="webSite" type="url" maxlength="1000"
+             [(ngModel)]="speakerForm.webSite" />
+    </div>
+
+    <button type="submit" [disabled]="form.invalid">Submit</button>
+  </form>
+</section>
