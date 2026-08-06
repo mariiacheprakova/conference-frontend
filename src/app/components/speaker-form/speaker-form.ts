@@ -1,6 +1,7 @@
-import { Component, output } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { CreateSpeaker } from '../../models/create-speaker.model';
+import { SpeakerStateService } from '../../services/speaker-state';
 
 @Component({
   selector: 'app-speaker-form',
@@ -9,15 +10,14 @@ import { CreateSpeaker } from '../../models/create-speaker.model';
   styleUrl: './speaker-form.css',
 })
 export class SpeakerForm {
-  readonly submitted = output<CreateSpeaker>();
+  private readonly state = inject(SpeakerStateService);
 
   speakerForm: CreateSpeaker = {
-    name: '',
-    bio: '',
-    webSite: '',
+    ...this.state.speakerForm(),
   };
 
   submitSpeaker(): void {
-    this.submitted.emit({ ...this.speakerForm });
+    this.state.updateForm({ ...this.speakerForm });
+    this.state.submitSpeaker();
   }
 }

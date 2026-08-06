@@ -1,19 +1,18 @@
-<main>
-  <h1>Conference management</h1>
+  <main>
+    <h1>Conference management</h1>
 
-  <app-speaker-list [speakers]="speakers"></app-speaker-list>
+    <app-speaker-list [speakers]="speakers"></app-speaker-list>
 
-  <app-speaker-form (submitted)="handleSpeakerSubmitted($event)">
-  </app-speaker-form>
+    <app-speaker-form></app-speaker-form>
 
-  @if (submittedSpeaker) {
-  <section>
-    <h2>Submitted speaker</h2>
-    <p><strong>Name:</strong> {{ submittedSpeaker.name }}</p>
-    <p><strong>Biography:</strong> {{ submittedSpeaker.bio || 'Not provided' }}</p>
-    <p><strong>Website:</strong> {{ submittedSpeaker.webSite || 'Not provided' }}</p>
-  </section>
-  } @else {
-  <p>No speaker has been submitted yet.</p>
-  }
-</main>
+    @if (submittedSpeaker()) {
+    <section>
+      <h2>Submitted speaker</h2>
+      <p><strong>Name:</strong> {{ submittedSpeaker()!.name }}</p>
+      <p><strong>Biography:</strong> {{ submittedSpeaker()!.bio || 'Not provided' }}</p>
+      <p><strong>Website:</strong> {{ submittedSpeaker()!.webSite || 'Not provided' }}</p>
+    </section>
+    } @else {
+    <p>No speaker has been submitted yet.</p>
+    }
+  </main>
