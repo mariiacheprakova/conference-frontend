@@ -1,5 +1,5 @@
 export type UiState =
-  | 'idle'
-  | 'loading'
-  | 'success'
-  | 'error';
+  | { status: 'idle' }
+  | { status: 'loading' }
+  | { status: 'success' }
+  | { status: 'error' };

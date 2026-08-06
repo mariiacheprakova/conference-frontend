@@ -3,6 +3,8 @@ import { FormsModule } from '@angular/forms';
 import { CreateSpeaker } from './models/create-speaker.model';
 import { Speaker } from './models/speaker.model';
 import { speakers } from './mock-data/speakers';
+import { environment } from '../environments/environment';
+
 
 @Component({
   selector: 'app-root',
@@ -11,6 +13,10 @@ import { speakers } from './mock-data/speakers';
   styleUrl: './app.css',
 })
 export class App {
+    constructor() {
+      console.log(environment.apiUrl);
+    }
+
   readonly speakers: Speaker[] = speakers;
 
   speakerForm: CreateSpeaker = {
