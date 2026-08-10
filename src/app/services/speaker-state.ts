@@ -6,26 +6,27 @@ import { CreateSpeaker } from '../models/create-speaker.model';
 })
 export class SpeakerStateService {
 
-  readonly speakerForm = signal<CreateSpeaker>({
+  private readonly _speakerForm = signal<CreateSpeaker>({
     name: '',
     bio: '',
     webSite: '',
   });
 
-  readonly submittedSpeaker = signal<CreateSpeaker | null>(null);
+  private readonly _submittedSpeaker = signal<CreateSpeaker | null>(null);
+  private readonly _uiState = signal<'empty' | 'filled'>('empty');
 
-  readonly uiState = signal<'empty' | 'filled'>('empty');
-
-  submitSpeaker(): void {
-
-    this.submittedSpeaker.set({
-      ...this.speakerForm(),
-    });
-
-    this.uiState.set('filled');
-  }
+  readonly speakerForm = this._speakerForm.asReadonly();
+  readonly uiState = this._uiState.asReadonly();
+  readonly submittedSpeaker = this._submittedSpeaker.asReadonly();
 
   updateForm(speaker: CreateSpeaker): void {
-    this.speakerForm.set(speaker);
+    this._speakerForm.set(speaker);
+  }
+
+  submitSpeaker(): void {
+    this._submittedSpeaker.set({
+      ...this._speakerForm(),
+    });
+    this._uiState.set('filled');
   }
 }

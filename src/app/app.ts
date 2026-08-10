@@ -18,4 +18,5 @@ export class App {
   readonly speakers: readonly Speaker[] = this.speakerDataService.getSpeakers();
 
   readonly submittedSpeaker = this.speakerStateService.submittedSpeaker;
+  readonly uiState = this.speakerStateService.uiState;
 }

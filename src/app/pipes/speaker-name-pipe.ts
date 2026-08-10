@@ -2,13 +2,11 @@ import { Pipe, PipeTransform } from '@angular/core';
 
 @Pipe({
   name: 'speakerName',
+  standalone: true,
 })
 export class SpeakerNamePipe implements PipeTransform {
   transform(name: string): string {
-    return name
-      .trim()
-      .split(/\s+/)
-      .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-      .join(' ');
+    return `Speaker: ${name}`}
   }
-}
+
+
