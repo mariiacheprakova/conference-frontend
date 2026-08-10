@@ -1,0 +1,39 @@
+<form [formGroup]="speakerForm"
+      (ngSubmit)="submitSpeaker()">
+
+  <div>
+    <label for="name">Name</label>
+
+    <input id="name" type="text" formControlName="name" />
+
+    @if (
+    speakerForm.controls.name.invalid &&
+    speakerForm.controls.name.touched
+    ) {
+    <p>Name is required.</p>
+    }
+  </div>
+
+  <div>
+    <label for="bio">Biography</label>
+
+    <textarea id="bio" maxlength="4000" formControlName="bio">
+    </textarea>
+  </div>
+
+  <div>
+    <label for="webSite">Website</label>
+
+    <input id="webSite"
+           type="url"
+           maxlength="1000"
+           formControlName="webSite" />
+  </div>
+
+  @if (successMessage) {
+  <p>{{ successMessage }}</p>
+  }
+
+  <button type="submit" [disabled]="speakerForm.invalid">Submit</button>
+
+</form>

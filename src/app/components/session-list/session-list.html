@@ -1,0 +1,24 @@
+<h2>Sessions</h2>
+
+@if (loading) {
+<p>Loading sessions...</p>
+
+} @else if (errorMessage) {
+<p>{{ errorMessage }}</p>
+
+} @else if (sessions.length === 0) {
+<p>No sessions available.</p>
+
+} @else {
+<ul>
+  @for (session of sessions; track session.id) {
+  <li>
+    <strong>{{ session.title }}</strong>
+
+    <a [routerLink]="['/sessions', session.id]">
+      View details
+    </a>
+  </li>
+  }
+</ul>
+}

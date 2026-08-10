@@ -1,0 +1,30 @@
+<h2>Session details</h2>
+
+@if (loading) {
+<p>Loading session...</p>
+} @else if (errorMessage) {
+<p>{{ errorMessage }}</p>
+} @else if (session) {
+<section>
+  <h3>{{ session.title }}</h3>
+
+  <p>
+    <strong>Abstract:</strong>{{ session.abstract || 'Not provided' }}
+  </p>
+
+  <p>
+    <strong>Start:</strong>{{ session.startTime }}
+  </p>
+
+  <p>
+    <strong>End:</strong>{{ session.endTime }}
+  </p>
+
+  <p>
+    <strong>Track ID:</strong>{{ session.trackId }}
+  </p>
+
+</section>
+} @else {
+<p>Session not found.</p>
+}
