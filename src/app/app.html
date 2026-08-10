@@ -1,93 +1,24 @@
-<main>
-  <h1>Conference speakers</h1>
+<section>
+  <h2>Sessions</h2>
 
-  <section>
-    <h2>Mocked speakers</h2>
-
-    <ul>
-      @for (speaker of speakers; track speaker.id) {
-      <li>
-        <strong>{{ speaker.name }}</strong>
-
-        @if (speaker.bio) {
-        <p>{{ speaker.bio }}</p>
-        }
-
-        @if (speaker.webSite) {
-        <a [href]="speaker.webSite" target="_blank">
-          Website
-        </a>
-        }
-      </li>
-      }
-    </ul>
-  </section>
-
-  <section>
-    <h2>Create speaker</h2>
-
-    <form #form="ngForm"
-          (ngSubmit)="submitSpeaker()">
-      <div>
-        <label for="name">Name</label>
-
-        <input id="name"
-               name="name"
-               type="text"
-               required
-               maxlength="200"
-               [(ngModel)]="speakerForm.name"
-               #name="ngModel" />
-
-        @if (name.invalid && name.touched) {
-        <p>Name is required.</p>
-        }
-      </div>
-
-      <div>
-        <label for="bio">Biography</label>
-
-        <textarea id="bio"
-                  name="bio"
-                  maxlength="4000"
-                  [(ngModel)]="speakerForm.bio"></textarea>
-      </div>
-
-      <div>
-        <label for="webSite">Website</label>
-
-        <input id="webSite"
-               name="webSite"
-               type="url"
-               maxlength="1000"
-               [(ngModel)]="speakerForm.webSite" />
-      </div>
-
-      <button type="submit"
-              [disabled]="form.invalid">
-        Submit
-      </button>
-    </form>
-  </section>
-
-  @if (submittedSpeaker) {
-  <section>
-    <h2>Submitted form data</h2>
-
-    <p>
-      <strong>Name:</strong>
-      {{ submittedSpeaker.name }}
-    </p>
-
-    <p>
-      <strong>Biography:</strong>
-      {{ submittedSpeaker.bio || 'Not provided' }}
-    </p>
-
-    <p>
-      <strong>Website:</strong>
-      {{ submittedSpeaker.webSite || 'Not provided' }}
-    </p>
-  </section>
+  @if (loading) {
+  <p>Loading sessions...</p>
+  } @else if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+  } @else if (sessions.length === 0) {
+  <p>No sessions available.</p>
+  } @else {
+  <ul>
+    @for (session of sessions; track session.id) {
+    <li>
+      <strong>{{ session.title }}</strong>
+    </li>
+    }
+  </ul>
   }
-</main>
+</section>
+
+<section>
+  <h2>Create session</h2>
+  <app-session-form></app-session-form>
+</section>
