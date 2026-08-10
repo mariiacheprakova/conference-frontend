@@ -1,40 +1,39 @@
-<form
-      #form = "ngForm"
-      (ngSubmit) = "submitSpeaker()">
+<form [formGroup]="speakerForm"
+      (ngSubmit)="submitSpeaker()">
 
   <div>
-    <label for="name" > Name </label>
+    <label for="name">Name</label>
 
-    <input
-      id= "name" name="name" type="text" required #name ="ngModel"
-      [ngModel] ="speakerForm().name" (ngModelChange) ="updateName($event)"/>
+    <input id="name" type="text" formControlName="name" />
 
-      @if(name.invalid && name.touched) {
-        <p>Name is required.</p>
+    @if (
+    speakerForm.controls.name.invalid &&
+    speakerForm.controls.name.touched
+    ) {
+    <p>Name is required.</p>
     }
   </div>
+
   <div>
     <label for="bio">Biography</label>
-    <textarea id="bio"
-              name="bio"
-              maxlength="4000"
-              [ngModel]="speakerForm().bio"
-              (ngModelChange)="updateBio($event)">
+
+    <textarea id="bio" maxlength="4000" formControlName="bio">
     </textarea>
   </div>
 
   <div>
     <label for="webSite">Website</label>
+
     <input id="webSite"
-           name="webSite"
            type="url"
            maxlength="1000"
-           [ngModel]="speakerForm().webSite"
-           (ngModelChange)="updateWebsite($event)" />
+           formControlName="webSite" />
   </div>
-  <button
-          type="submit"
-          [disabled] ="form.invalid">Submit
-  </button>
+
+  @if (successMessage) {
+  <p>{{ successMessage }}</p>
+  }
+
+  <button type="submit" [disabled]="speakerForm.invalid">Submit</button>
 
 </form>

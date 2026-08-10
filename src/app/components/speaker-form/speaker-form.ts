@@ -1,40 +1,47 @@
 import { Component, inject } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators
+} from '@angular/forms';
+
 import { SpeakerStateService } from '../../services/speaker-state';
 
 @Component({
   selector: 'app-speaker-form',
-  imports: [FormsModule],
+  imports: [ReactiveFormsModule],
   templateUrl: './speaker-form.html',
   styleUrl: './speaker-form.css',
 })
 export class SpeakerForm {
-
   private readonly state = inject(SpeakerStateService);
-  readonly speakerForm = this.state.speakerForm;
 
-  updateName(name: string): void {
-    this.state.updateForm({
-      ...this.speakerForm(),
-      name,
-    });
-  }
+  readonly speakerForm = new FormGroup({
+    name: new FormControl('', {nonNullable: true,validators: [Validators.required]}),
+    bio: new FormControl('', {nonNullable: true}),
+    webSite: new FormControl('', {nonNullable: true})
+  });
 
-  updateBio(bio: string): void {
-    this.state.updateForm({
-      ...this.speakerForm(),
-      bio,
-    });
-  }
-
-  updateWebsite(webSite: string): void {
-    this.state.updateForm({
-      ...this.speakerForm(),
-      webSite,
-    });
-  }
+  successMessage = '';
 
   submitSpeaker(): void {
-this.state.submitSpeaker();
+    if (this.speakerForm.invalid) {
+      this.speakerForm.markAllAsTouched();
+      return;
+    }
+
+    const speaker = this.speakerForm.getRawValue();
+
+    this.state.updateForm(speaker);
+    this.state.submitSpeaker();
+    this.successMessage = 'Speaker submitted successfully.';
+
+    this.speakerForm.reset(
+      {
+        name: '',
+        bio: '',
+        webSite: '',
+      });
   }
 }

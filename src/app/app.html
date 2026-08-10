@@ -1,18 +1,24 @@
-  <main>
-    <h1>Conference management</h1>
+<section>
+  <h2>Sessions</h2>
 
-    <app-speaker-list [speakers]="speakers"></app-speaker-list>
-
-    <app-speaker-form></app-speaker-form>
-
-    @if (submittedSpeaker()) {
-    <section>
-      <h2>Submitted speaker</h2>
-      <p><strong>Name:</strong> {{ submittedSpeaker()!.name }}</p>
-      <p><strong>Biography:</strong> {{ submittedSpeaker()!.bio || 'Not provided' }}</p>
-      <p><strong>Website:</strong> {{ submittedSpeaker()!.webSite || 'Not provided' }}</p>
-    </section>
-    } @else {
-    <p>No speaker has been submitted yet.</p>
+  @if (loading) {
+  <p>Loading sessions...</p>
+  } @else if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+  } @else if (sessions.length === 0) {
+  <p>No sessions available.</p>
+  } @else {
+  <ul>
+    @for (session of sessions; track session.id) {
+    <li>
+      <strong>{{ session.title }}</strong>
+    </li>
     }
-  </main>
+  </ul>
+  }
+</section>
+
+<section>
+  <h2>Create session</h2>
+  <app-session-form></app-session-form>
+</section>

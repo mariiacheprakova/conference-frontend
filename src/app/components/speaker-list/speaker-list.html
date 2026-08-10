@@ -1,31 +1,42 @@
-<section>
-  <h2>Conference speakers</h2>
+@if (speakers().length > 0) {
 
-  @if (speakers().length > 0) {
-  <ul>
-    @for (speaker of speakers(); track speaker.id) {
-    <li [ngClass]="{ 'has-bio': !!speaker.bio }">
-      <ng-container [ngTemplateOutlet]="speakerTemplate"
-                    [ngTemplateOutletContext]="{ $implicit: speaker }">
-      </ng-container>
+<ul>
 
-      @if (speaker.bio) {
-      <p>{{ speaker.bio }}</p>
-      }
+  @for (speaker of speakers(); track speaker.id) {
 
-      @if (speaker.webSite) {
-      <a [href]="speaker.webSite" target="_blank">Website</a>
-      }
-    </li>
-    } @empty {
-    <li>No speakers available.</li>
+  <li [ngClass]="{ 'has-bio': !!speaker.bio }">
+
+    <ng-container [ngTemplateOutlet]="speakerTemplate"
+                  [ngTemplateOutletContext]="{ $implicit: speaker }">
+    </ng-container>
+
+    @if (speaker.bio) {
+    <p>{{ speaker.bio }}</p>
     }
-  </ul>
-  } @else {
-  <p>No data found.</p>
+
+    @if (speaker.webSite) {
+    <a [href]="speaker.webSite"
+       target="_blank">
+      Website
+    </a>
+    }
+
+  </li>
+
+  } @empty {
+
+  <li>No speakers available.</li>
+
   }
 
-  <ng-template #speakerTemplate let-speaker>
-    <strong>{{ speaker.name }}</strong>
-  </ng-template>
-</section>
+</ul>
+
+} @else {
+
+<p>No speakers available.</p>
+
+}
+
+<ng-template #speakerTemplate let-speaker>
+  <strong>{{ speaker.name | speakerName }}</strong>
+</ng-template>

@@ -1,0 +1,58 @@
+<form [formGroup]="sessionForm"
+      (ngSubmit)="submitSession()">
+
+  <div>
+    <label for="title">Title</label>
+
+    <input id="title" type="text" formControlName="title" />
+
+    @if (
+    sessionForm.controls.title.invalid &&
+    sessionForm.controls.title.touched
+    ) {
+    <p>Title is required.</p>
+    }
+  </div>
+
+  <div>
+    <label for="abstract">Abstract</label>
+
+    <textarea id="abstract" formControlName="abstract">
+    </textarea>
+  </div>
+
+  <div>
+    <label for="startTime">Start time</label>
+
+    <input id="startTime" type="datetime-local" formControlName="startTime" />
+  </div>
+
+  <div>
+    <label for="endTime">End time</label>
+
+    <input id="endTime" type="datetime-local" formControlName="endTime" />
+  </div>
+
+  <div>
+    <label for="trackId">Track ID</label>
+
+    <input id="trackId" type="number" formControlName="trackId" />
+  </div>
+
+  @if (isSubmitting) {
+  <p>Creating session...</p>
+  }
+
+  @if (errorMessage) {
+  <p>{{ errorMessage }}</p>
+  }
+
+  @if (successMessage) {
+  <p>{{ successMessage }}</p>
+  }
+
+  <button type="submit" [disabled]="sessionForm.invalid || isSubmitting">
+    Create session
+  </button>
+
+</form>
