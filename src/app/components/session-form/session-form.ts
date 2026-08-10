@@ -7,6 +7,7 @@ import {
 } from '@angular/forms';
 
 import { ConferenceApiService } from '../../services/conference-api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-session-form',
@@ -16,6 +17,7 @@ import { ConferenceApiService } from '../../services/conference-api';
 })
 export class SessionForm {
   private readonly api = inject(ConferenceApiService);
+  private readonly router = inject(Router);
 
   readonly sessionForm = new FormGroup({
     title: new FormControl('', {nonNullable: true,validators: [Validators.required]}),
@@ -53,6 +55,7 @@ export class SessionForm {
           endTime: '',
           trackId: 1
         });
+        this.router.navigate(['/sessions']);
       },
 
       error: () => {

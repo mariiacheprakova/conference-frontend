@@ -28,4 +28,8 @@ export class ConferenceApiService {
   createSession(session: CreateSession): Observable<Session> {
     return this.http.post<Session>(this.endpoints.sessions,session);
   }
+  getSessionById(id: number): Observable<Session> {
+    return this.http.get<Session>(
+      `${this.endpoints.sessions}/${id}`)
+  };
 }
