@@ -19,21 +19,18 @@ export class SpeakerForm {
       name,
     });
   }
-
   updateBio(bio: string): void {
     this.state.updateForm({
       ...this.speakerForm(),
       bio,
     });
   }
-
   updateWebsite(webSite: string): void {
     this.state.updateForm({
       ...this.speakerForm(),
       webSite,
     });
   }
-
   submitSpeaker(): void {
 this.state.submitSpeaker();
   }

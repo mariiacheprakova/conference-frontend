@@ -4,7 +4,7 @@
   @if (speakers().length > 0) {
   <ul>
     @for (speaker of speakers(); track speaker.id) {
-    <li [ngClass]="{ 'has-bio': !!speaker.bio }">
+    <li>
       <ng-container [ngTemplateOutlet]="speakerTemplate"
                     [ngTemplateOutletContext]="{ $implicit: speaker }">
       </ng-container>
@@ -14,15 +14,15 @@
       }
 
       @if (speaker.webSite) {
-      <a [href]="speaker.webSite" target="_blank">Website</a>
+      <a [href]="speaker.webSite" target="_blank">
+        Website
+      </a>
       }
     </li>
-    } @empty {
-    <li>No speakers available.</li>
     }
   </ul>
   } @else {
-  <p>No data found.</p>
+  <p>No speakers available.</p>
   }
 
   <ng-template #speakerTemplate let-speaker>

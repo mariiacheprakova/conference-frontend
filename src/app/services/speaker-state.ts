@@ -22,7 +22,6 @@ export class SpeakerStateService {
   updateForm(speaker: CreateSpeaker): void {
     this._speakerForm.set(speaker);
   }
-
   submitSpeaker(): void {
     this._submittedSpeaker.set({
       ...this._speakerForm(),

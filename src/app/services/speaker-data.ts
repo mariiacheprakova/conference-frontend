@@ -5,7 +5,6 @@ import { speakers } from '../mock-data/speakers';
 @Injectable({
   providedIn: 'root',
 })
-
 export class SpeakerDataService {
   getSpeakers(): readonly Speaker[] {
     return speakers;
