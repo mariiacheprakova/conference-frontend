@@ -1,35 +1,22 @@
-import { Component } from '@angular/core';
-import { FormsModule } from '@angular/forms';
-import { CreateSpeaker } from './models/create-speaker.model';
+import { Component, inject } from '@angular/core';
 import { Speaker } from './models/speaker.model';
-import { speakers } from './mock-data/speakers';
-import { environment } from '../environments/environment';
-
+import { SpeakerDataService } from './services/speaker-data';
+import { SpeakerStateService } from './services/speaker-state';
+import { SpeakerForm } from './components/speaker-form/speaker-form';
+import { SpeakerList } from './components/speaker-list/speaker-list';
 
 @Component({
   selector: 'app-root',
-  imports: [FormsModule],
+  imports: [SpeakerForm, SpeakerList],
   templateUrl: './app.html',
   styleUrl: './app.css',
 })
 export class App {
-    constructor() {
-      console.log(environment.apiUrl);
-    }
+  private readonly speakerDataService = inject(SpeakerDataService);
+  private readonly speakerStateService = inject(SpeakerStateService);
 
-  readonly speakers: Speaker[] = speakers;
+  readonly speakers: readonly Speaker[] = this.speakerDataService.getSpeakers();
 
-  speakerForm: CreateSpeaker = {
-    name: '',
-    bio: '',
-    webSite: '',
-  };
-
-  submittedSpeaker: CreateSpeaker | null = null;
-
-  submitSpeaker(): void {
-    this.submittedSpeaker = {
-      ...this.speakerForm,
-    };
-  }
+  readonly submittedSpeaker = this.speakerStateService.submittedSpeaker;
+  readonly uiState = this.speakerStateService.uiState;
 }

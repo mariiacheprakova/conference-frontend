@@ -1,93 +1,32 @@
 <main>
-  <h1>Conference speakers</h1>
+  <h1>Conference management</h1>
 
+  <app-speaker-list [speakers]="speakers"></app-speaker-list>
+
+  <app-speaker-form></app-speaker-form>
+
+  @if (uiState() === 'filled') {
+  @if (submittedSpeaker(); as speaker) {
   <section>
-    <h2>Mocked speakers</h2>
-
-    <ul>
-      @for (speaker of speakers; track speaker.id) {
-      <li>
-        <strong>{{ speaker.name }}</strong>
-
-        @if (speaker.bio) {
-        <p>{{ speaker.bio }}</p>
-        }
-
-        @if (speaker.webSite) {
-        <a [href]="speaker.webSite" target="_blank">
-          Website
-        </a>
-        }
-      </li>
-      }
-    </ul>
-  </section>
-
-  <section>
-    <h2>Create speaker</h2>
-
-    <form #form="ngForm"
-          (ngSubmit)="submitSpeaker()">
-      <div>
-        <label for="name">Name</label>
-
-        <input id="name"
-               name="name"
-               type="text"
-               required
-               maxlength="200"
-               [(ngModel)]="speakerForm.name"
-               #name="ngModel" />
-
-        @if (name.invalid && name.touched) {
-        <p>Name is required.</p>
-        }
-      </div>
-
-      <div>
-        <label for="bio">Biography</label>
-
-        <textarea id="bio"
-                  name="bio"
-                  maxlength="4000"
-                  [(ngModel)]="speakerForm.bio"></textarea>
-      </div>
-
-      <div>
-        <label for="webSite">Website</label>
-
-        <input id="webSite"
-               name="webSite"
-               type="url"
-               maxlength="1000"
-               [(ngModel)]="speakerForm.webSite" />
-      </div>
-
-      <button type="submit"
-              [disabled]="form.invalid">
-        Submit
-      </button>
-    </form>
-  </section>
-
-  @if (submittedSpeaker) {
-  <section>
-    <h2>Submitted form data</h2>
+    <h2>Submitted speaker</h2>
 
     <p>
       <strong>Name:</strong>
-      {{ submittedSpeaker.name }}
+      {{ speaker.name }}
     </p>
 
     <p>
       <strong>Biography:</strong>
-      {{ submittedSpeaker.bio || 'Not provided' }}
+      {{ speaker.bio || 'Not provided' }}
     </p>
 
     <p>
       <strong>Website:</strong>
-      {{ submittedSpeaker.webSite || 'Not provided' }}
+      {{ speaker.webSite || 'Not provided' }}
     </p>
   </section>
+  }
+  } @else {
+  <p>No speaker has been submitted yet.</p>
   }
 </main>
